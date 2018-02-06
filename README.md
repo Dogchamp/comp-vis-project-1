@@ -1,37 +1,15 @@
-## Welcome to GitHub Pages
+## Computer Vision Project 1
+This is a write up for the Computer Visions course at GWU.
 
-You can use the [editor on GitHub](https://github.com/Dogchamp/comp-vis-project-1/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### The Algorithm
+This colorizer algorithm will first divy up the image into each of the color channels by dividing the image into horizontal thirds, and assigning each their correct color (RGB from top-to-bottom) 
+As an extra feature, it will then correct the contrast of the entire picture via CLAHE (Contrast Limited Adaptive Histogram Equalization). openCV's CLAHE module preferse operating on grayscale pictures it seems, so this part is done pre-alignment.
+Next, the alignment process begins. It does so by first constructing the Gaussian image pyramid down to four levels for each channel. The Gaussian image pyramid is contstructed by applying a Gaussian filter to the image and then sampling every other pixel from the image to create a new one.
+Then, each level from the pyramid is scored against its corresponding level in the next channel. For example, red will be scored against green, and green to blue. Scoring is done via a sum of squared differences (ssd) operation. The displacement is found for the best score (the lowest ssd), and then the image is then rolled to align.
+The images are then stacked ontop of each other to form the final image. 	
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+#### Clahe
+Here is CLAHE in action. The difference is very visible.
+![Image](gramma.jpg)
+![Image](gramma_clahe.jpg)
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Dogchamp/comp-vis-project-1/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
